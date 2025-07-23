@@ -288,8 +288,8 @@ def save_mappings_to_file(data_to_save, filename):
     print(f"数据已保存到 '{filename}'。")
 
 # --- 设置文件路径和d值 ---
-output_dir = "breast_cancer_experiment_data" # 乳腺癌实验数据的保存目录
-d_value = 10 # 乳腺癌实验中明确的模型向量数量 d=10
+output_dir = "mnist_experiment_data" # MNIST实验数据的保存目录
+d_value = 40 # MNIST实验中明确的模型向量数量 d=40
 step_size = 0.1 # 每个维度切分成 10 段 (1 / 0.1 = 10)
 
 # --- Voronoi 映射相关参数 ---
@@ -297,20 +297,20 @@ step_size = 0.1 # 每个维度切分成 10 段 (1 / 0.1 = 10)
 # 第三层索引深度：只保存当前点和第一层深度的邻居
 num_voronoi_neighbors_to_map = 5 # 仅考虑每个VR的1个最近邻作为其“第一层深度邻居”
 
-print("--- 准备数据和索引构建 (乳腺癌数据集) ---")
+print("--- 准备数据和索引构建 (MNIST数据集) ---")
 
-# --- 加载乳腺癌数据集的模型向量 ---
+# --- 加载MNIST数据集的模型向量 ---
 model_vectors_filename = os.path.join(output_dir, f"X_model_d{d_value}.npy")
 model_labels_filename = os.path.join(output_dir, f"y_model_d{d_value}.npy")
 
 try:
     X_model_current = np.load(model_vectors_filename)
     y_model_current = np.load(model_labels_filename)
-    print(f"\n--- 正在处理 d={d_value} 的乳腺癌模型向量集 ---")
+    print(f"\n--- 正在处理 d={d_value} 的MNIST模型向量集 ---")
     print(f"成功加载 d={d_value} 的模型向量。形状: {X_model_current.shape}")
 
     # --- 1. 定义网格参数 ---
-    gamma = X_model_current.shape[1] # 数据维度 (乳腺癌是 30 维)
+    gamma = X_model_current.shape[1] # 数据维度 (MNIST是 30 维)
     min_vals = np.zeros(gamma) # 假设数据已缩放到 [0, 1]
     max_vals = np.ones(gamma) # 假设数据已缩放到 [0, 1]
     
@@ -441,7 +441,7 @@ try:
 
 except FileNotFoundError:
     print(f"\n错误: 无法找到 d={d_value} 的模型向量文件。请确保 '{output_dir}' 目录中存在 '{model_vectors_filename}' 和 '{model_labels_filename}'。")
-    print("请先运行乳腺癌的明文实验代码来生成这些数据。")
+    print("请先运行MNIST的明文实验代码来生成这些数据。")
 except Exception as e:
     print(f"\n处理 d={d_value} 时发生错误: {e}")
 
