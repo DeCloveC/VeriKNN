@@ -52,6 +52,14 @@ For high diversity dataset test:
 python3 main_high_diverse.py
 ```
 
+## 📁 Key Generation
+
+Run the following scripts to prepare the key:
+
+```bash
+python3 Data/setup.py
+```
+
 ## 📁 Data Generation
 
 Run the following scripts to prepare the data:
